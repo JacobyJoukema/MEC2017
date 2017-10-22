@@ -76,6 +76,33 @@ def update_swarms():
 
 	swarms = [s for s in swarms if s.mag != 0]
 
+def get_danger_level(dist, mag):
+	ex = mag / dist
+
+	# Mag goes from 0 to 80 approx (80 is full size swarm)
+	# Dist: 0 to 0.3, 0.3 being max
+
+	danger = -1
+
+	if (ex < 10):
+		danger = 0
+	elif (ex < 50):
+		danger = 1
+	elif (ex < 100):
+		danger = 2
+	elif (ex < 500):
+		danger = 3
+	elif (ex < 2000):
+		danger = 4
+	else:
+		danger = 5
+
+	f = open("danger.log", "a")
+	f.write("Dist: " + str(dist) + ", Mag: " + str(mag) + ", Danger: " + str(danger) + "\n")
+	f.close()
+
+	return danger
+
 def query_farm(farm_pos):
 	global swarms
 	for s in swarms:
@@ -83,7 +110,7 @@ def query_farm(farm_pos):
 		x = (p_ - s.b) / (s.m + s.minv)
 		y = s.m * x + s.b
 		d = dist(Pos(x,y), farm_pos)
-		
+
 
 
 
