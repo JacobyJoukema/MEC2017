@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from .pests.views import MainView
+from .pests.views import MainView, PointApiView
 
 urlpatterns = [
     url(r'^$', MainView.as_view()),
+    url(r'^api/point', PointApiView.as_view()),
     url(r'^admin/', admin.site.urls),
 ]
