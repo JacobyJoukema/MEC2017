@@ -232,10 +232,10 @@ class PointApiView(View):
 
 home = "/home/ori/MEC2017/POC/tf_files/images/"
 
-live = [home + "live" + f for f in os.listdir(home + "live") if os.path.isfile(os.path.join(home + "live", f))]
-dead = [home + "dead" + f for f in os.listdir(home + "dead") if os.path.isfile(os.path.join(home + "dead", f))]
+#live = [home + "live" + f for f in os.listdir(home + "live") if os.path.isfile(os.path.join(home + "live", f))]
+#dead = [home + "dead" + f for f in os.listdir(home + "dead") if os.path.isfile(os.path.join(home + "dead", f))]
 
-allfiles = live + dead
+#allfiles = live + dead
 
 def getAll():
     global allfiles
