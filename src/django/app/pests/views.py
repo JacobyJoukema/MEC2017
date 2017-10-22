@@ -249,7 +249,7 @@ class PicCnnView(View):
 
         os.system("python3 /data/ori/MEC2017/POC/poc.py " + chosen + " > /home/ori/ORI")
         f = open("/home/ori/ORI", "r")
-        aaa = f.read()
+        aaa = f.readlines()
         f.close()
 
         return JsonResponse({
