@@ -119,7 +119,7 @@ def update_swarms():
         s.pos = s.pos + randish_move() + s.lean
 
         if (uniform(0,1) < 0.01):
-            s.pos = Pos(self.original_pos.x, self.original_pos.y)
+            s.pos = Pos(s.original_pos.x, s.original_pos.y)
 
         s.b = s.pos.y - s.pos.x * s.m
 
