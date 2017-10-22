@@ -179,6 +179,7 @@ class PointApiView(View):
             }
 
         incID()
+        update_swarms()
 
         to_remove = []
 
