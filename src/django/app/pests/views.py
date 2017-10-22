@@ -190,10 +190,17 @@ class PointApiView(View):
                 }]
             del getPoints()[key]
 
+        obspos = Pos((obscure_loc() + s.pos).x, (obscure_loc() + s.pos).y)
+        DAN = query_farm(obspos)
+
+        typ = 0
+        if (DAN != 0):
+            typ = 1
+
         to_add = [{
-            'lat': (obscure_loc() + s.pos).x,
-            'long': (obscure_loc() + s.pos).y,
-            'type': 0,
+            'lat': obspos.x,
+            'long': obspos.y
+            'type': typ,
             'ID': getID()
             }]
 
