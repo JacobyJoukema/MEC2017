@@ -182,14 +182,13 @@ class PointApiView(View):
         to_remove = []
         if (getID() >= 10):
 
-            id_sel = randint(0, len(list(getPoints().keys()))-1)
-            kkk = list(getPoints().keys())[id_sel]
-            point = getPoints()[kkk]
+            index = randint(0, len(list(getPoints().keys()))-1)
+            key = list(getPoints().keys())[index]
 
             to_remove = [{
-                'ID': point['ID']
+                'ID': key
                 }]
-            del getPoints()[kkk]
+            del getPoints()[key]
 
         to_add = [{
             'lat': (obscure_loc() + s.pos).x,
