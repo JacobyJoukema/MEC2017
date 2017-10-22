@@ -49,6 +49,7 @@ class Swarm:
         self.m = self.lean.y / self.lean.x
         self.minv = -1 / self.m
         self.b = 0
+        self.original_pos = Pos(self.pos.x, self.pos.y)
 
 
 swarms = []
@@ -111,11 +112,15 @@ def update_swarms():
                 s.mag = 0
         else:
             # Keep growing
-            s.mag += 5 * random() - 0.2
+            s.mag += 15 * random() - 0.2
             s.mag = max(s.mag, 0)
 
         # Update position, direction
         s.pos = s.pos + randish_move() + s.lean
+
+        if (uniform(0,1) < 0.01):
+            s.pos = Pos(s.original_pos.x, s.original_pos.y)
+
         s.b = s.pos.y - s.pos.x * s.m
 
         s.life += 1
@@ -165,7 +170,7 @@ def query_farm(farm_pos):
     return max_danger
 
 
-fill_swarms(40)
+fill_swarms(400)
 
 points = {}
 
