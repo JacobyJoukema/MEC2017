@@ -20,6 +20,13 @@ def randish_move():
     y = math.sin(theta) * r
     return Pos(x,y)
 
+def obscure_loc():
+    r = random() / 10
+    theta = random() * 2 * math.pi
+    x = math.cos(theta) * r
+    y = math.sin(theta) * r
+    return Pos(x,y)
+
 class Farm:
     def __init__(self, name, x, y):
         self.name = name
@@ -143,22 +150,41 @@ def query_farm(farm_pos):
 
 fill_swarms(40)
 
+points = []
+# X, Y, 0/1
+
+ID = 0
+
+def getID():
+	global ID
+	return ID
+
+def incID():
+	global ID
+	ID += 1
+
 class MainView(TemplateView):
     template_name = 'pests/index.html'
 
 class PointApiView(View):
     def get(self, request):
 
-        to_add = []
+    	s = swarms[randint(0, len(swarms)-1)]
+
+        to_add = JsonResponse({
+        	'lat': (obscure_loc() + s.pos).x,
+        	'long': (obscure_loc() + s.pos).y,
+        	'type': 0,
+        	'ID': getID()
+        	})
+
+        incID()
+
         to_remove = []
 
-        # return JsonResponse({
-        #     'add': to_add,
-        #     'remove': to_remove
-        # })
-
         return JsonResponse({
-            'chamu': "test_val"
+            'add': [to_add],
+            'remove': []
         })
 
 # Create your views here.
