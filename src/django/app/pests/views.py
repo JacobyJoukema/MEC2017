@@ -237,6 +237,9 @@ dead = [home + "dead" + f for f in os.listdir(home + "dead") if os.path.isfile(o
 
 allfiles = live + dead
 
+
+
+
 def getAll():
     global allfiles
     return allfiles
