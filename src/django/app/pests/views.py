@@ -156,12 +156,12 @@ points = []
 ID = 0
 
 def getID():
-	global ID
-	return ID
+    global ID
+    return ID
 
 def incID():
-	global ID
-	ID += 1
+    global ID
+    ID += 1
 
 class MainView(TemplateView):
     template_name = 'pests/index.html'
@@ -169,14 +169,14 @@ class MainView(TemplateView):
 class PointApiView(View):
     def get(self, request):
 
-    	s = swarms[randint(0, len(swarms)-1)]
+        s = swarms[randint(0, len(swarms)-1)]
 
         to_add = JsonResponse({
-        	'lat': (obscure_loc() + s.pos).x,
-        	'long': (obscure_loc() + s.pos).y,
-        	'type': 0,
-        	'ID': getID()
-        	})
+            'lat': (obscure_loc() + s.pos).x,
+            'long': (obscure_loc() + s.pos).y,
+            'type': 0,
+            'ID': getID()
+            })
 
         incID()
 
