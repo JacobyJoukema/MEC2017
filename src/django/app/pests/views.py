@@ -4,6 +4,7 @@ from django.http import JsonResponse
 
 from random import random, randint, uniform
 import math
+import os
 
 class Pos:
     def __init__(self, x, y):
@@ -212,6 +213,32 @@ class PointApiView(View):
         return JsonResponse({
             'add': to_add,
             'remove': to_remove
+        })
+
+home = "/home/ori/MEC2017/POC/tf_files/images/"
+
+live = [home + "live" + f for f in os.listdir(home + "live") if os.path.isfile(os.path.join(home + "live", f))]
+dead = [home + "dead" + f for f in os.listdir(home + "dead") if os.path.isfile(os.path.join(home + "dead", f))]
+
+allfiles = live + dead
+
+def getAll():
+    global allfiles
+    return allfiles
+
+class PicCnnView(View):
+    def get(self, request):
+
+        allf = getAll()
+        chosen = getAll()[randint(0, len(allf)-1)]
+
+        os.system("python3 /data/ori/MEC2017/POC/poc.py " + chosen + " > /home/ori/ORI")
+        f = open("/home/ori/ORI", "r")
+        aaa = f.readlines()
+        f.close()
+
+        return JsonResponse({
+            'everything': aaa
         })
 
 # Create your views here.
