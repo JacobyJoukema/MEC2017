@@ -172,15 +172,14 @@ def query_farm(farm_pos):
 
 fill_swarms(400)
 
-points = {}
-
-
-# X, Y, 0/1
-
+points = []
 def getPoints():
     global points
     return points
 
+def setPoints(s):
+    global points
+    points = s
 
 ID = 0
 
@@ -210,13 +209,10 @@ class PointApiView(View):
 
         to_remove = []
         if (getID() >= 10):
-            index = randint(0, len(list(getPoints().keys())) - 1)
-            key = list(getPoints().keys())[index]
-
             to_remove = [{
-                'ID': key
+                'ID': getID() - 10
             }]
-            del getPoints()[key]
+
 
         to_add = [{
             'lat': (obscure_loc() + s.pos).x,
@@ -225,7 +221,8 @@ class PointApiView(View):
             'ID': getID()
         }]
 
-        getPoints()[to_add[0]['ID']] = to_add
+        getPoints().append(to_add)
+        setPoints(getPoints()[1:])
 
         incID()
         update_swarms()
