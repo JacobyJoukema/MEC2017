@@ -53,7 +53,7 @@ function roll_points(data) {
             var id = am.ID
             var lat = am.lat;
             var long = am.long;
-            var type = am.type;
+            var type = Math.random()<=0.2 ? 0 : 1//am.type;
             var icon_img;
             if (type == 1) { icon_img = ok_img; }
             else { icon_img = bad_img; }
