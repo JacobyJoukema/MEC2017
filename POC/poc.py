@@ -10,7 +10,7 @@ python tensorflow/examples/image_retraining/retrain.py \
 '''
 import os
 print(os.system('pwd'))
-image_path = "./test/dead.jpg"
+image_path = sys.argv[1]
 
 image_data = tf.gfile.FastGFile(image_path,'rb').read()
 
