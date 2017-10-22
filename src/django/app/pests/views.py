@@ -183,8 +183,7 @@ class PointApiView(View):
         to_remove = []
 
         return JsonResponse({
-            'add': [to_add],
-            'remove': []
+            'add': [to_add]
         })
 
 # Create your views here.
