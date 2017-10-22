@@ -21,7 +21,7 @@ def randish_move():
     return Pos(x,y)
 
 def obscure_loc():
-    r = random() / 10
+    r = random() / 100
     theta = random() * 2 * math.pi
     x = math.cos(theta) * r
     y = math.sin(theta) * r
@@ -150,7 +150,7 @@ def query_farm(farm_pos):
 
 fill_swarms(40)
 
-points = []
+points = {}
 # X, Y, 0/1
 
 ID = 0
@@ -163,28 +163,42 @@ def incID():
     global ID
     ID += 1
 
+def getSwarms():
+    global swarms
+    return swarms
+
 class MainView(TemplateView):
     template_name = 'pests/index.html'
 
 class PointApiView(View):
     def get(self, request):
 
-        s = swarms[randint(0, len(swarms)-1)]
+        s = getSwarms()[randint(0, len(getSwarms())-1)]
 
-        to_add = {
+        to_remove = []
+        if (getID() >= 10):
+
+            id_sel = randint(0, len(points.keys)-1)
+            to_remove = [{
+                'ID': points[points.keys[id_sel]].ID
+                }]
+            del points[id_sel]
+
+        to_add = [{
             'lat': (obscure_loc() + s.pos).x,
             'long': (obscure_loc() + s.pos).y,
             'type': 0,
             'ID': getID()
-            }
+            }]
+
+        points[to_add['ID']] = to_add
 
         incID()
         update_swarms()
 
-        to_remove = []
-
         return JsonResponse({
-            'add': [to_add]
+            'add': to_add
+            'remove': to_remove
         })
 
 # Create your views here.
