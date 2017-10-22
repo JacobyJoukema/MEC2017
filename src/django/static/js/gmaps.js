@@ -14,14 +14,14 @@ var infowindow = new google.maps.InfoWindow();
 var marker, i;
 
 var ok_img = {
-  url: '{% static "img/ok_medium.png" %}',
+  url: 'static/img/ok_medium.png',
   size: new google.maps.Size(32, 32),
   origin: new google.maps.Point(0, 0),
   anchor: new google.maps.Point(16, 16),
 }
 
 var bad_img = {
-  url: '{% static "img/bad_medium.png" %}',
+  url: 'static/img/bad_medium.png',
   size: new google.maps.Size(32, 32),
   origin: new google.maps.Point(0, 0),
   anchor: new google.maps.Point(16, 16),
@@ -38,35 +38,44 @@ marker = new google.maps.Marker({
 
 var markers = {};
 function get_data() {
+    console.log('fetching')
     $.ajax('/api/points', {
         success: function(data) {
+            console.log(data);
             roll_points(data);
         }
     })
 }
 function roll_points(data) {
-    for (var i=0; i<data.add.length; i++) {
-        var am = data.add[i];
-        var id = am.id
-        var lat = am.lat;
-        var long = am.long;
-        var type = am.type;
-        var icon_img;
-        if (type == 0) { icon_img = ok_img; }
-        else { icon_img = bad_img; }
-        markers[id] = new google.maps.Marker({
-            position: new google.maps.LatLng(lat, long),
-            map: map,
-            icon: icon_img,
-        })
+    if (data.add) {
+        for (var i=0; i<data.add.length; i++) {
+            var am = data.add[i];
+            var id = am.ID
+            var lat = am.lat;
+            var long = am.long;
+            var type = am.type;
+            var icon_img;
+            if (type == 0) { icon_img = ok_img; }
+            else { icon_img = bad_img; }
+            markers[id] = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, long),
+                map: map,
+                icon: icon_img,
+                animation: google.maps.Animation.DROP,
+            })
+        }
     }
-    for (var i=0; i<data.remove.length; i++) {
-        var am = data.remove[i];
-        var id = am.id;
-        markers[id].setMap(null);
+    if (data.remove) {
+        for (var i=0; i<data.remove.length; i++) {
+            var am = data.remove[i];
+            var id = am.ID;
+            if (markers[id]) {
+                markers[id].setMap(null);
+            }
+        }
     }
 }
-setInterval(500, get_data);
+setInterval(get_data, 1000);
 //
 //for (i = 0; i < locations.length; i++) {
 //  marker = new google.maps.Marker({
