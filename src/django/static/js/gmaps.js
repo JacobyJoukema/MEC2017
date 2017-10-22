@@ -55,13 +55,13 @@ function roll_points(data) {
             var long = am.long;
             var type = am.type;
             var icon_img;
-            if (type == 0) { icon_img = ok_img; }
+            if (type == 1) { icon_img = ok_img; }
             else { icon_img = bad_img; }
             markers[id] = new google.maps.Marker({
                 position: new google.maps.LatLng(lat, long),
                 map: map,
                 icon: icon_img,
-                animation: google.maps.Animation.DROP,
+                //animation: google.maps.Animation.DROP,
             })
         }
     }
