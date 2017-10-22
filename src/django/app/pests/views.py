@@ -171,12 +171,12 @@ class PointApiView(View):
 
         s = swarms[randint(0, len(swarms)-1)]
 
-        to_add = JsonResponse({
+        to_add = {
             'lat': (obscure_loc() + s.pos).x,
             'long': (obscure_loc() + s.pos).y,
             'type': 0,
             'ID': getID()
-            })
+            }
 
         incID()
 
