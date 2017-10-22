@@ -53,7 +53,7 @@ def gen_swarm():
 
 def fill_swarms(count):
     global swarms
-    for i in xrange(count):
+    for i in range(count):
         swarms.append(gen_swarm())
 
 def read_farms():
