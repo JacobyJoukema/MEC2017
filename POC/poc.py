@@ -10,7 +10,7 @@ python tensorflow/examples/image_retraining/retrain.py \
 '''
 import os
 print(os.system('pwd'))
-image_path = "./test/dead.jpg"
+image_path = sys.argv[1]
 
 image_data = tf.gfile.FastGFile(image_path,'rb').read()
 
@@ -30,7 +30,9 @@ with tf.Session() as sess:
 
     top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
 
+    f = open("/home/ori/ORI", "w")
     for node_id in top_k:
         human_string = label_lines[node_id]
         score = predictions[0][node_id]
-        print('%s (score = %.5f)' % (human_string, score))
+        f.write('%s (score = %.5f)' % (human_string, score) + "\n")
+    f.close()
