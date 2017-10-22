@@ -184,7 +184,7 @@ class PointApiView(View):
 
             id_sel = randint(0, len(getPoints().keys())-1)
             to_remove = [{
-                'ID': getPoints()[getPoints().keys()[id_sel]]['ID']
+                'ID': getPoints()[list(getPoints().keys())[id_sel]]['ID']
                 }]
             del getPoints()[id_sel]
 
