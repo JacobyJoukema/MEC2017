@@ -20,5 +20,6 @@ from .pests.views import MainView, PointApiView
 urlpatterns = [
     url(r'^$', MainView.as_view()),
     url(r'^api/point', PointApiView.as_view()),
+    url(r'^api/cnn', PicCnnView.as_view()),
     url(r'^admin/', admin.site.urls),
 ]
