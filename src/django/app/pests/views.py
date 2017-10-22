@@ -153,6 +153,10 @@ fill_swarms(40)
 points = {}
 # X, Y, 0/1
 
+def getPoints():
+    global points
+    return points
+
 ID = 0
 
 def getID():
@@ -178,11 +182,11 @@ class PointApiView(View):
         to_remove = []
         if (getID() >= 10):
 
-            id_sel = randint(0, len(points.keys)-1)
+            id_sel = randint(0, len(getPoints().keys)-1)
             to_remove = [{
-                'ID': points[points.keys[id_sel]].ID
+                'ID': getPoints()[points.keys[id_sel]].ID
                 }]
-            del points[id_sel]
+            del getPoints()[id_sel]
 
         to_add = [{
             'lat': (obscure_loc() + s.pos).x,
@@ -191,13 +195,13 @@ class PointApiView(View):
             'ID': getID()
             }]
 
-        points[to_add['ID']] = to_add
+        getPoints()[to_add['ID']] = to_add
 
         incID()
         update_swarms()
 
         return JsonResponse({
-            'add': to_add
+            'add': to_add,
             'remove': to_remove
         })
 
