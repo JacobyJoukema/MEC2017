@@ -329,6 +329,13 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 .card-register {
   max-width: 40rem; }
 
+.live-feed {
+    height: 100px;
+    width: 100%;
+    overflow: hidden;
+    background-color: gray;
+}
+
 footer.sticky-footer {
   position: absolute;
   right: 0;

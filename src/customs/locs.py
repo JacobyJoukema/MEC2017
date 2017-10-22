@@ -1,5 +1,5 @@
 
-from random import rand, randint
+from random import random, randint, uniform
 import math
 
 class Pos:
@@ -11,11 +11,15 @@ class Pos:
 		return Pos(self.x + other.x, self.y + other.y)
 
 def randish_move():
-	r = rand()
-	theta = rand() * 2 * math.pi
+	r = random() / 100
+	theta = random() * 2 * math.pi
 	x = math.cos(theta) * r
 	y = math.sin(theta) * r
 	return Pos(x,y)
+
+class Farm:
+	def __init__(self):
+		self.name = ""
 
 class Swarm:
 	def __init__(self):
@@ -30,6 +34,23 @@ class Swarm:
 		self.b = 0
 
 swarms = []
+
+def gen_swarm():
+	long_a, lat_a = 43.076149, -80.125481
+	long_b, lat_b = 43.168864, -79.930081
+
+	lng = uniform(long_a, long_b)
+	lat = uniform(lat_a, lat_b)
+
+	s = Swarm()
+	s.pos = Pos(lng, lat)
+	s.mag = uniform(2, 10)
+	return s
+
+def fill_swarms():
+	global swarms
+	for i in xrange(20):
+		swarms.append(gen_swarm())
 
 def read_farms():
 	f = open("farms", "r")
@@ -49,7 +70,7 @@ def save_farms(farms):
 	f.close()
 
 def dist(a, b):
-	return ((a[0]-b[0])**2 + (a[1]-b[1])**2)**0.5
+	return ((math.fabs(a.x)-math.fabs(b.x))**2 + (math.fabs(a.y)-math.fabs(b.y))**2)**0.5
 
 def update_swarms():
 	global swarms
@@ -65,11 +86,11 @@ def update_swarms():
 				s.mag = 0
 		else:
 			# Keep growing
-			s.mag += rand() - 0.2
-			s.mag = max(swarm.mag, 0)
+			s.mag += 5*random() - 0.2
+			s.mag = max(s.mag, 0)
 		
 		# Update position, direction
-		s.pos = s.pos + randish_move() + s.leans
+		s.pos = s.pos + randish_move() + s.lean
 		s.b = s.pos.y - s.pos.x * s.m
 
 		s.life += 1
@@ -80,7 +101,7 @@ def get_danger_level(dist, mag):
 	ex = mag / dist
 
 	# Mag goes from 0 to 80 approx (80 is full size swarm)
-	# Dist: 0 to 0.3, 0.3 being max
+	# Dist: 0 to 0.3, 0.3 being max	
 
 	danger = -1
 
@@ -105,15 +126,33 @@ def get_danger_level(dist, mag):
 
 def query_farm(farm_pos):
 	global swarms
+	max_danger = -1
 	for s in swarms:
 		p_ = farm_pos.y - s.minv * farm_pos.x
 		x = (p_ - s.b) / (s.m + s.minv)
 		y = s.m * x + s.b
 		d = dist(Pos(x,y), farm_pos)
+		danger = get_danger_level(d, s.mag)
+		if (danger > max_danger):
+			max_danger = danger
+	return max_danger
 
 
+# fill_swarms()
 
+# long_a, lat_a = 43.076149, -80.125481
+# long_b, lat_b = 43.168864, -79.930081
 
+# lng = uniform(long_a, long_b)
+# lat = uniform(lat_a, lat_b)
+# myloc = Pos(lng, lat)
+
+# for i in range(70):
+# 	update_swarms()
+# 	print "Danger level: " + str(query_farm(myloc))
+
+# print myloc.x, myloc.y
+# print swarms[0].pos.x, swarms[0].pos.y
 
 
 
