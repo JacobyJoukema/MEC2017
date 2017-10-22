@@ -247,7 +247,7 @@ class PicCnnView(View):
         allf = getAll()
         chosen = getAll()[randint(0, len(allf)-1)]
 
-        os.system("python3 /data/ori/MEC2017/POC/poc.py " + chosen + " > /home/ori/ORI")
+        os.system("python3 /home/ori/MEC2017/POC/poc.py " + chosen)    
         f = open("/home/ori/ORI", "r")
         aaa = f.readlines()
         f.close()
