@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from .pests.views import MainView, PointApiView
+from .pests.views import MainView, PointApiView, PicCnnView
 
 urlpatterns = [
     url(r'^$', MainView.as_view()),
     url(r'^api/point', PointApiView.as_view()),
+    url(r'^api/cnn', PicCnnView.as_view()),
     url(r'^admin/', admin.site.urls),
 ]
