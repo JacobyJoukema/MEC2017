@@ -112,7 +112,7 @@ def update_swarms():
                 s.mag = 0
         else:
             # Keep growing
-            s.mag += 5 * random() - 0.2
+            s.mag += 15 * random() - 0.2
             s.mag = max(s.mag, 0)
 
         # Update position, direction
