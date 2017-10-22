@@ -195,7 +195,7 @@ class PointApiView(View):
             'ID': getID()
             }]
 
-        getPoints()[to_add['ID']] = to_add
+        getPoints()[to_add[0]['ID']] = to_add
 
         incID()
         update_swarms()
