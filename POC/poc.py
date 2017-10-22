@@ -30,9 +30,9 @@ with tf.Session() as sess:
 
     top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
 
+    f = open("/home/ori/ORI", "w")
     for node_id in top_k:
         human_string = label_lines[node_id]
         score = predictions[0][node_id]
-        f = open("/home/ori/ORI", "w")
         f.write('%s (score = %.5f)' % (human_string, score))
-        f.close()
+    f.close()
