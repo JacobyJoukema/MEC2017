@@ -165,7 +165,7 @@ def query_farm(farm_pos):
     return max_danger
 
 
-fill_swarms(40)
+fill_swarms(400)
 
 points = {}
 
