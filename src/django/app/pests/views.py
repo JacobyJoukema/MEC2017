@@ -199,7 +199,7 @@ class PointApiView(View):
 
         to_add = [{
             'lat': obspos.x,
-            'long': obspos.y
+            'long': obspos.y,
             'type': typ,
             'ID': getID()
             }]
